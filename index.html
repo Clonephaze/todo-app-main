@@ -2,35 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
+  <meta name="darkreader-lock">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="Resources/images/favicon-32x32.png">
   <title>Frontend Mentor | Todo app</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="">
+  <main>
+      <div class="content-wrapper">
+        <div class="title-container">
+          <span>TODO</span>
+          <label for="DarkModeToggle" class="theme-switch" >
+            <input type="checkbox" id="DarkModeToggle" onclick="toggleDarkMode()" aria-label="Dark Mode Switch">
+            <span class="current-theme-icon"></span>
+          </label>
+        </div>
+        <div class="input-container">
+          <div class="input-icon"></div>
+          <input type="text" name="Create a new todo" class="input-field" placeholder="Create a new todo..." aria-label="Create a new todo" tabindex="0"></input>
+        </div>
+        <div class="list-wrapper">
+          <ul class="todo-list" id="todo-list">
+          </ul>
+          <div class="info-row">
+            <div class="item-count"><span id="item-count">5</span> items left</div>
+            <div class="sort-btn-group">
+              <button class="active">All</button>
+              <button class="">Active</button>
+              <button class="">Completed</button>
+            </div>
+            <div class="clear-completed-btn">Clear Completed</div>
+          </div>
+        </div>
+        <div class="sort-btn-group-mobile">
+          <div class="sort-btn-group">
+            <button class="active">All</button>
+            <button class="">Active</button>
+            <button class="">Completed</button>
+          </div>
+        </div>
+        <div class="bottom-message">Drag and drop to reorder list</div>
+      </div>
+      <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+        Coded by <a href="https://github.com/Clonephaze">Clonephaze</a>.
+      </div>
+  </main>
 
-  Todo
-
-  <!-- Add dynamic number --> items left
-
-  All
-  Active 
-  Completed
-
-  Clear Completed
-
-  Drag and drop to reorder list
-
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
+  <script src="DarkModeToggle.js"></script>
+  <script src="Sortable.js"></script>
+  <script src="todos.js"></script>
+  <script>
+    var list = document.querySelector('.todo-list');
+    var sortable = Sortable.create(list, {
+      delay: 200,
+      delayOnTouchOnly: true,
+      animation: 150,
+      group: "todoList",
+      store: {
+        get: function (sortable) {
+          var order = localStorage.getItem(sortable.options.group.name);
+          return order ? order.split('|') : [];
+        },
+        set: function (sortable) {
+          var order = sortable.toArray();
+          localStorage.setItem(sortable.options.group.name, order.join('|'));
+        }
+      }
+    });
+ 
+  </script>
 </body>
 </html>

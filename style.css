@@ -1,0 +1,445 @@
+:root {
+    --active-text-color: hsl(220, 98%, 61%);
+    /* Bright Blue */
+    --checkbox-gradient: linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+    /* Checkbox checked Background */
+
+    /****** Light Theme Variables ******/
+    --bg-color: hsl(0, 0%, 98%);
+    /* Very Light Gray */
+    --card-bg-color: hsl(0, 0%, 100%);
+    /* White */
+    --small-text-color: hsl(236, 9%, 61%);
+    /* Light Grayish Blue */
+    --small-text-color-hover: hsl(235, 19%, 35%);
+    /* Dark Grayish Blue */
+    --checkbox-border-color: hsl(236, 9%, 61%);
+    /* Very Light Grayish Blue */
+    --todo-text-color: hsl(235, 19%, 35%);
+    /* Dark Grayish Blue */
+    --todo-text-color-complete: hsl(236, 9%, 61%);
+    /* Very Light Grayish Blue */
+    --todo-item-border-color: hsl(236, 33%, 92%);
+    /* Light Grayish Blue */
+    --input-text-color: hsl(236, 9%, 61%);
+    /* Very Dark Grayish Blue */
+    --box-shadow-color: rgba(0, 0, 0, 0);
+    --theme-icon: url(Resources/images/icon-moon.svg);   
+    --background-image: url(Resources/images/bg-desktop-light.jpg);
+
+    @media (max-width: 660px) {
+        --background-image: url(Resources/images/bg-mobile-light.jpg);
+    }
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/****** Dark Theme Variables ******/
+.dark-mode {
+    /*** Applied via JS to body on toggle, overrides root variables ***/
+    --bg-color: hsl(240, 20%, 12%);
+    /* Very Dark Blue */
+    --card-bg-color: hsl(235, 24%, 19%);
+    /* Very Dark Desaturated Blue */
+    --small-text-color: hsl(233, 14%, 35%);
+    /* Dark Grayish Blue */
+    --small-text-color-hover: hsl(236, 33%, 92%);
+    /* Light Grayish Blue */
+    --checkbox-border-color: hsl(237, 14%, 26%);
+    /* Very Dark Grayish Blue */
+    --todo-text-color: hsl(234, 39%, 85%);
+    /* Light Grayish Blue */
+    --todo-text-color-complete: hsl(235, 15%, 30%);
+    /* Dark Grayish Blue */
+    --todo-item-border-color: hsl(237, 14%, 26%);
+    /* Very Dark Grayish Blue */
+    --input-text-color: hsl(235, 23%, 78%);
+    /* Light Grayish Blue */
+    --box-shadow-color: rgba(0, 0, 0, 0.4);
+    --theme-icon: url(Resources/images/icon-sun.svg);
+    --background-image: url(Resources/images/bg-desktop-dark.jpg);
+
+    @media (max-width: 660px) {
+        --background-image: url(Resources/images/bg-mobile-dark.jpg);
+    }
+
+    & *,
+    *::before,
+    *::after {
+        transition: color 250ms ease-in-out,
+            background-color 250ms ease-in-out,
+            border-color 250ms ease-in-out;
+    }
+
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 18px;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 250ms ease-in-out;
+
+    background-image: var(--background-image);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: top center;
+}
+
+main {
+    display: grid;
+    place-items: center;
+    min-width: 34rem;
+    max-width: 100%;
+
+    & .content-wrapper {
+        max-width: 87vw;
+        width: 34rem;
+    }
+}
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2em 0 1em 0;
+    font-size: clamp(1.5rem, -1.0161rem + 8.6022vw, 2.5rem);
+
+    & span {
+        font-weight: 700;
+        letter-spacing: 1rem;
+        color: hsl(0, 0%, 100%);
+    }
+}
+
+.input-container {
+    --_input-font-clamp: clamp(0.75rem, 0.6688rem + 0.3463vw, 1.5rem);
+    width: 100%;
+    background-color: var(--card-bg-color);
+    background-origin: border-box;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    line-height: 1em;
+
+    & .input-icon {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 1.1em 1.15em 1.1em 1.5em;
+        border: 1px solid var(--checkbox-border-color);
+        font-size: var(--_input-font-clamp);
+        border-radius: 50%;
+    }
+
+    & .input-field {
+        width: 20rem;
+        max-width: 60vw;
+        background: none;
+        border: none;
+        color: var(--todo-text-color);
+        font-size: var(--_input-font-clamp);
+        font-family: "Josefin Sans", sans-serif;
+
+        &::placeholder {
+            color: var(--input-text-color);
+            font-size: var(--_input-font-clamp);
+            font-family: "Josefin Sans", sans-serif;
+        }
+        
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.list-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    padding: 1px;
+    background-color: var(--card-bg-color);
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    min-height: 2rem;
+    box-shadow: 0 0 40px 10px var(--box-shadow-color);
+}
+
+.todo-list {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-bg-color);
+}
+
+.todo-item {
+    --_item-font-clamp: clamp(0.6875rem, 0.5725rem + 0.4906vw, 1.75rem);
+    transition: all 125ms ease-in-out;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--_item-font-clamp);
+    color: var(--todo-text-color);
+    border-bottom: 1px solid var(--todo-item-border-color);
+
+    & div {
+        display: flex;
+        align-items: center;
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    &.item-complete {
+        color: var(--todo-text-color-complete);
+        text-decoration: line-through;
+    }
+
+
+    & .delete-btn {
+        cursor: pointer;
+        width: 1em;
+        aspect-ratio: 1;
+        margin: 0 2em;
+        background: none;
+        background-image: url(Resources/images/icon-cross.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        border: none;
+        opacity: 1;
+        transition: opacity 125ms ease-out;
+
+        @media (min-width: 660px) {
+            opacity: 0;
+            width: 1.5em;
+        }
+    }
+
+    &:hover .delete-btn {
+        opacity: 1;
+    }
+}
+
+.todo-item-checkbox {
+    display: none;
+    
+}
+
+.todo-item-icon {
+    display: inline-block;
+    margin: 1.15em 1.15em 1.15em 1.5em;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--card-bg-color);
+    z-index: 1;
+    transition: all 200ms;
+
+    &:hover::before {
+        background: linear-gradient(var(--checkbox-border-color), var(--checkbox-border-color)) padding-box, var(--checkbox-gradient) border-box;
+    }
+}
+
+.todo-item-icon::before {
+    content: "";
+    display: block;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background: linear-gradient(var(--card-bg-color), var(--card-bg-color)) padding-box, linear-gradient(var(--checkbox-border-color), var(--checkbox-border-color)) border-box;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    z-index: -1;
+
+    
+}
+
+.todo-item-icon::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    background-image: url("Resources/images/icon-check.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    z-index: 1;
+   }
+
+.todo-item-icon.checked::before {
+    background: linear-gradient(45deg, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+}
+
+.todo-item-icon.checked::after {
+    opacity: 1;
+}
+
+.todo-item-icon.checked {
+    background: linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+    rotate: 45deg;
+}
+
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: clamp(0.75rem, 0.6688rem + 0.3463vw, 1.5rem);
+    font-weight: 500;
+    padding: 1rem;
+    color: var(--small-text-color);
+
+    & .sort-btn-group button {
+        float: left;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: var(--small-text-color);
+        padding: 0 0.5rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        font-family: inherit;
+
+        &.active {
+            color: var(--active-text-color);
+        }
+
+        &:hover {
+            color: var(--small-text-color-hover);
+        }
+    }
+
+    & .sort-btn-group {
+        @media (max-width: 460px) {
+            display: none;
+        }
+    }
+
+    & .clear-completed-btn {
+        
+        cursor: pointer;
+
+        &:hover {
+            color: var(--small-text-color-hover);
+        }
+    }
+}
+
+.sortable-chosen {
+    opacity: 0.5;
+}
+
+.theme-switch {
+    font-size: clamp(1.5rem, -1.0161rem + 8.6022vw, 1.75rem);
+    width: fit-content;
+
+    & input {
+        display: none;
+    }
+
+    & .current-theme-icon {
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        width: 0.9em;
+        aspect-ratio: 1;
+        background-image: var(--theme-icon);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+
+    }
+}
+
+.sort-btn-group-mobile {
+    display: none;
+    margin-top: 1rem;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 5px;
+    width: 100%;
+    height: fit-content;
+    background-color: var(--card-bg-color);
+
+    & .sort-btn-group{
+        margin: 0.9em;
+    }
+
+
+    @media (max-width: 460px) {
+        display: flex;
+    }
+
+    & .sort-btn-group button {
+        float: left;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: var(--small-text-color);
+        padding: 0 0.5rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        font-family: inherit;
+
+        &.active {
+            color: var(--active-text-color);
+        }
+
+        &:hover {
+            color: var(--small-text-color-hover);
+        }
+    }
+}
+
+.bottom-message {
+    margin: 3rem 0 1rem 0; 
+    font-size: 0.9rem;
+    color: var(--small-text-color);
+    text-align: center;
+}
+
+.attribution {
+    font-size: 11px;
+    text-align: center;
+    color: var(--small-text-color);
+    font-weight: bold;
+}
+
+.attribution a {
+    color: var(--active-text-color);
+    text-decoration: none;
+}
+
+
+@font-face {
+    /* Hosted locally, good performance practice */
+    font-family: "Josefin Sans";
+    src: url(Resources/JosefinSans-VariableFont_wght.ttf);
+}
