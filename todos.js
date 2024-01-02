@@ -78,12 +78,16 @@ function renderTodos() {
         deleteButton.innerHTML = '';
         deleteButton.className = 'delete-btn';
         deleteButton.addEventListener('click', function() {
-        listItem.remove();
-        todos = todos.filter(function(todo) {
-            return todo !== item;
-        });
-        localStorage.setItem('todos', JSON.stringify(todos));
-        renderTodos(); // Re-render todos after deleting an item
+            listItem.classList.add('hidden');
+            setTimeout(() => {
+                listItem.remove();
+                todos = todos.filter(function(todo) {
+                    return todo !== item;
+                });
+                localStorage.setItem('todos', JSON.stringify(todos));
+                renderTodos(); // Re-render todos after deleting an item
+                updateItemCount(); // Update item count
+            }, 800); // Wait for the transition to finish
         });
 
         // Append the delete button to the list item
@@ -113,14 +117,19 @@ inputField.addEventListener('keypress', function(event) {
 
  // Re-render todos
  renderTodos();
+ updateItemCount();
  }
 });
 
 function updateItemCount() {
     let todos = JSON.parse(localStorage.getItem('todos')) || [];
     let activeTodos = todos.filter(todo => todo.activeState === 0);
-    document.getElementById('item-count').textContent = activeTodos.length || 5;
-}    
+    if (activeTodos.length > 0) {
+        document.getElementById('item-count').textContent = activeTodos.length;
+    } else {
+        document.getElementById('item-count').textContent = 0;
+    }
+ }  
 updateItemCount();
 
 

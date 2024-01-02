@@ -188,7 +188,7 @@ main {
 
 .todo-item {
     --_item-font-clamp: clamp(0.6875rem, 0.5725rem + 0.4906vw, 1.75rem);
-    transition: all 125ms ease-in-out;
+    transition: max-height 800ms ease;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -196,6 +196,8 @@ main {
     font-size: var(--_item-font-clamp);
     color: var(--todo-text-color);
     border-bottom: 1px solid var(--todo-item-border-color);
+    overflow: hidden;
+    max-height: 500px;
 
     & div {
         display: flex;
@@ -203,7 +205,9 @@ main {
     }
 
     &.hidden {
-        display: none;
+        max-height: 0;
+        border-color: transparent;
+        transition: max-height 800ms ease, border 800ms ease 250ms;
     }
 
     &.item-complete {
