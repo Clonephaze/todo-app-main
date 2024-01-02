@@ -55,3 +55,7 @@ Users should be able to:
 
 - Website - [Github](https://github.com/Clonephaze)
 - Frontend Mentor - [@Clonephaze](https://www.frontendmentor.io/profile/Clonephaze)
+
+## Useful Links
+
+- [Clamp font size generator](https://clamp.font-size.app/)
